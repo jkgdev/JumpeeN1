@@ -11,17 +11,17 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.project.jumpee.View;
 
 @Entity
-@Table (name="product")
-public class Product {
+@Table (name="ordercart")
+public class Order {
 
-	@Column (name="product_id") @JsonView(View.Base.class)
-	private Integer product_id;
+	@Column (name="order_id") @JsonView(View.Base.class)
+	private Integer order_id; 
+	
+	@Column (name="order_id") @JsonView(View.Base.class)
+	private int product_id;
 	
 	@Column (name="productname") @JsonView(View.Base.class)
 	private String productname;
-	
-	@Column (name="brand") @JsonView(View.Base.class)
-	private String brand;
 	
 	@Column (name="price") @JsonView(View.Base.class)
 	private float price;
@@ -29,17 +29,27 @@ public class Product {
 	@Column (name="quantity") @JsonView(View.Base.class)
 	private int quantity;
 	
-	Product () {}
+	@Column (name="totalprice") @JsonView(View.Base.class)
+	private float totalprice;
+	
+	Order () {}
 
 	@Id @GeneratedValue (strategy = GenerationType.IDENTITY)
-	public Integer getProduct_id() {
+	public Integer getOrder_id() {
+		return order_id;
+	}
+
+	public void setOrder_id(Integer order_id) {
+		this.order_id = order_id;
+	}
+
+	public int getProduct_id() {
 		return product_id;
 	}
 
-	public void setProduct_id(Integer product_id) {
+	public void setProduct_id(int product_id) {
 		this.product_id = product_id;
 	}
-
 
 	public String getProductname() {
 		return productname;
@@ -47,14 +57,6 @@ public class Product {
 
 	public void setProductname(String productname) {
 		this.productname = productname;
-	}
-
-	public String getBrand() {
-		return brand;
-	}
-
-	public void setBrand(String brand) {
-		this.brand = brand;
 	}
 
 	public float getPrice() {
@@ -72,5 +74,15 @@ public class Product {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
+
+	public float getTotalprice() {
+		return totalprice;
+	}
+
+	public void setTotalprice(float totalprice) {
+		this.totalprice = totalprice;
+	}
+	
+	
 	
 }
