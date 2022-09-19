@@ -23,7 +23,7 @@ public class AddressService {
 	}
 	//SAVE ADDRESS ADD
 	public void save(Address address, int id) {
-		address.setCustomer_id(id);
+		address.setCustomerid(id);
 		repository.save(address);
 	}
 	//SAVE ADDRESS UPDATE

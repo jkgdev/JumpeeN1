@@ -22,6 +22,7 @@ public class LoginController {
 		
 	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 	
+// LOG IN --------------------------------------------------------------------------------------------
 	
 	//LOGIN USING EMAIL AND PASSWORD - working
 	@PostMapping("/login")
@@ -30,21 +31,24 @@ public class LoginController {
 		String dbemailexist = customerservice.getdbemail(customer.getEmail());	
 		String dbpassword= customerservice.getPassword(customer.getEmail());
 		
+		String role = customerservice.getRole(customer.getEmail());
 		
 		boolean samepasswords = encoder.matches(customer.getPassword(), dbpassword);
-				
-		if(dbemailexist != null && samepasswords == true) {
+						
+		if(dbemailexist != null && samepasswords == true && role.equals("REGISTERED CUSTOMER")) {
 			
+			//CHANGE LOGIN STATUS FROM OUT TO IN
 			Customer user = customerservice.getCustomerByEmail(customer.getEmail());	
 			user.setStatus("IN");		    
-			customerservice.save(user);
+			customerservice.changestatus(user);
 			return ResponseEntity.ok()
-	                .body(new CustomerResponse("You are successfully logged in, " + user.getFirstname() + " " + user.getLastname()));
+	                .body(new CustomerResponse( "You are successfully logged in, "
+	                							+ user.getFirstname() + " " + user.getLastname()));
 		}
 		//EMAIL EXISTENCE
 		else if(dbemailexist == null) {
 			return ResponseEntity.badRequest()
-		            .body(new CustomerResponse("Your provided email address didn't exist..."));	
+				     .body(new CustomerResponse("Your provided email address is not registered..."));	
 		}
 		//WRONG PASSWORD
 		else if(samepasswords == false) {			
@@ -53,9 +57,11 @@ public class LoginController {
 		}
 		else {
 			return ResponseEntity.badRequest()
-	                .body(new CustomerResponse("Customer login failed"));
+	                .body(new CustomerResponse("Customer login failed, please try again"));
 		}		
 	}
+
+// RESET PASSWORD --------------------------------------------------------------------------------------------	
 	
 	//RESET PASSWORD - working
 	@PutMapping("/resetpassword")
@@ -103,9 +109,9 @@ public class LoginController {
 //CHANGE ACCOUNT PASSWORD (MYACCOUNT)--------------------------------------------------------------------------------------------
 	
 	//CHANGE PASSWORD (MYACCOUNT) - working
-		@PutMapping("/changepassword/{id}")
-			public ResponseEntity <CustomerResponse> changepassword (@PathVariable Integer id,
-																	@RequestBody Customer customer) {							
+		@PutMapping("/change-password/{id}")
+			public ResponseEntity <CustomerResponse> changepassword (	@PathVariable Integer id,
+																		@RequestBody Customer customer) {							
 			String dbpassword= customerservice.getPasswordById(id);
 			String loggedin = customerservice.getStatus(id);			
 			boolean samepasswords = encoder.matches(customer.getCurrentpassword(), dbpassword);
@@ -117,40 +123,39 @@ public class LoginController {
 								
 				Customer user = customerservice.getCustomerById(id);	
 					
-				if (loggedin == "IN") { 
+				if (loggedin.equals("IN")) { 
 					user.setPassword(customer.getNewpassword());		    
 					customerservice.save(user);
 								
 					return ResponseEntity.ok()
-				           .body(new CustomerResponse("You have changed your password, " + user.getFirstname() + " " + user.getLastname()));	
+				           .body(new CustomerResponse("You have changed your password, " 
+				        		   						+ user.getFirstname() + " " + user.getLastname()));	
 				}
 				else {
-					return ResponseEntity.ok()
+					return ResponseEntity.badRequest()
 					       .body(new CustomerResponse("Change password failed. Please log in to continue..."));
 				}
-		}
-				//CURRENT PASSWORD CHECK - working
-				else if (samepasswords == false) {
-					
+			}
+			//CURRENT PASSWORD CHECK - working
+			else if (samepasswords == false) {					
 					return ResponseEntity.badRequest()
 				            .body(new CustomerResponse("Your provided password doesn't match with your current password..."));
 				}
-				//SAME CURRENT AND NEW PASSWORDS - working
-				else if (samecurrentnewpassword && samepasswords == true) {
+			//SAME CURRENT AND NEW PASSWORDS - working
+			else if (samecurrentnewpassword && samepasswords == true) {
 					return ResponseEntity.badRequest()
 					         .body(new CustomerResponse("Your current password and new password are same. Try other new password..."));
 				}
-				//NEW PASSWORD and CONFIRM PASSWORD - working
-				else if (!(customer.getNewpassword().equals(customer.getConfirmnewpassword()))) {
+			//NEW PASSWORD and CONFIRM PASSWORD - working
+			else if (!(customer.getNewpassword().equals(customer.getConfirmnewpassword()))) {
 					return ResponseEntity.badRequest()
 				            .body(new CustomerResponse("Your new password and confirm password doesn't match..."));
 				}	
-				//RESET PASSWORD FAILED
-				else {
+			//CHANGE PASSWORD FAILED
+			else {
 					return ResponseEntity.badRequest()
 		            .body(new CustomerResponse("Change password failed"));
 				}			
-			}	
-	
+			}		
 }
 

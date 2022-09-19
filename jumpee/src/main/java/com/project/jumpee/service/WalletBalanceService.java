@@ -43,6 +43,12 @@ public class WalletBalanceService {
 			return sum;
 		}
 		
+		// Subtraction of DB amount and checkout amount
+		public float afterCheckoutAmount (float dbamount, float insertamount) {
+			float difference = dbamount - insertamount;
+			return difference;
+				}
+		
 		//Create wallet account
 		public void addAmount(WalletBalance wallet, int id) {
 			wallet.setCustomer_id(id);

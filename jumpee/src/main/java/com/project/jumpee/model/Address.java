@@ -22,8 +22,8 @@ public class Address {
 	private String contactperson;
 	@Column (name="contactnumber") @JsonView(View.Base.class)
 	private String contactnumber;
-	@Column (name="customer_id") @JsonView(View.Base.class)
-	private Integer customer_id;
+	@Column (name="customerid")
+	private Integer customerid;
 	
 	Address () {}
 
@@ -60,12 +60,12 @@ public class Address {
 		this.contactnumber = contactnumber;
 	}
 
-	public Integer getCustomer_id() {
-		return customer_id;
+	public Integer getCustomerid() {
+		return customerid;
 	}
 
-	public void setCustomer_id(Integer customer_id) {
-		this.customer_id = customer_id;
+	public void setCustomerid(Integer customerid) {
+		this.customerid = customerid;
 	}
 	
 }

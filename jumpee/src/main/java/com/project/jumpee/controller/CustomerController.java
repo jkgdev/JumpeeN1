@@ -29,14 +29,6 @@ public class CustomerController {
 		this.service = service;
 	}
 
-// VIEW ALL REGISTERED CUSTOMERS --------------------------------------------------------------------------------------------		
-	
-	//VIEW ALL REGISTERED CUSTOMER - working
-	@GetMapping ("/registeredcustomers")
-	@JsonView(View.Base.class)
-	public List <Customer> list() {
-		return service.listAll();
-	}
 
 // REGISTER A CUSTOMER --------------------------------------------------------------------------------------------	
 	
@@ -86,10 +78,12 @@ public class CustomerController {
 		}
 		//CREATE RECORD - working
 		else {
+		customer.setRole("REGISTERED CUSTOMER");
 		customer.setStatus("OUT");
 		service.save(customer);
 		return ResponseEntity.ok()
-                .body(new CustomerResponse("You are now a registered customer, " + customer.getFirstname() + " " + customer.getLastname()));	
+                .body(new CustomerResponse("You are now a registered customer, "
+                							+ customer.getFirstname() + " " + customer.getLastname()));	
 		}
 	}
 
@@ -128,4 +122,11 @@ public class CustomerController {
                 .body(new CustomerResponse("Record Deleted..."));
 	}
 
+// VIEW ALL REGISTERED CUSTOMERS --------------------------------------------------------------------------------------------		
+	
+	//VIEW ALL REGISTERED CUSTOMER - working
+	@GetMapping ("/registeredcustomers") @JsonView(View.Base.class)
+		public List <Customer> list() {
+			return service.listAll();
+	}	
 }

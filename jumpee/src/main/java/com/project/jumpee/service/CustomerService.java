@@ -29,6 +29,10 @@ public class CustomerService {
 			user.setPassword(encodedpassword);				
 			repository.save(user);
 		}
+		
+		public void changestatus(Customer user) {													
+			repository.save(user);
+		}
 		//DELETE CUSTOMER FROM ID
 		public void delete(Integer id) {
 			repository.deleteById(id);
@@ -41,10 +45,12 @@ public class CustomerService {
 		public Customer getCustomerById(Integer id) {
 			return repository.findById(id).get();
 		}
+
 		//GET CUSTOMER BY EMAIL
 		public Customer getCustomerByEmail(String email) {
 			return repository.getCustomerByEmail(email);
 		}		
+		
 		//GET EMAIL FROM DB using email
 		public String getdbemail(String email) {
 			return repository.findByEmail(email);
@@ -56,8 +62,14 @@ public class CustomerService {
 		//GET STATUS FROM DB using email
 		public String getStatus (Integer id) {
 			return repository.getStatus(id);
-		}		
+		}
+		
 		//GET STATUS FROM DB using email
+		public String getRole (String email) {
+			return repository.getRoleByEmail(email);
+		}
+		
+		//GET Customer FROM DB using email
 		public Customer getCustomerByStatus (String status) {
 			return repository.getCustomerByStatus(status);
 		}		

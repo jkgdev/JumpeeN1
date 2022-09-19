@@ -14,8 +14,8 @@ import com.project.jumpee.View;
 @Table (name="wallet")
 public class WalletBalance {
 
-	@Column (name="walletbalance_id") @JsonView(View.Base.class)
-	private Integer walletbalance_id;
+	@Column (name="wallet_id") @JsonView(View.Base.class)
+	private Integer wallet_id;
 	
 	@Column (name="customer_id") @JsonView(View.Base.class)
 	private int customer_id;
@@ -26,11 +26,11 @@ public class WalletBalance {
 	WalletBalance () {}
 
 	@Id @GeneratedValue (strategy = GenerationType.IDENTITY)
-	public Integer getWalletbalance_id() {
-		return walletbalance_id;
+	public Integer getWallet_id() {
+		return wallet_id;
 	}
-	public void setWalletbalance_id(int walletbalance_id) {
-		this.walletbalance_id = walletbalance_id;
+	public void setWallet_id(int wallet_id) {
+		this.wallet_id = wallet_id;
 	}
 
 	public int getCustomer_id() {

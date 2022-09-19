@@ -30,6 +30,8 @@ public class ProductListController {
 	    
 	    @Autowired
 		ProductService productservice;	
+
+// DEFAULT PRODUCT LISTING --------------------------------------------------------------------------------------------	    
 	    
 	    @GetMapping("/productlist")
 	    public ResponseEntity<?> defaultProductList(
@@ -53,6 +55,8 @@ public class ProductListController {
 	        return new ResponseEntity<>(display, HttpStatus.OK);
 	      }	    
 
+// SORT BY PRODUCT NAME (ASCENDING / DESCENDING) --------------------------------------------------------------------------------------------		    
+	    
 	    @GetMapping("/productlist/SortByNameASC")
 	    public Page <Product> nameASC (@PageableDefault(sort="productname", direction = Direction.ASC,size = 9) Pageable page){
 	    	return productservice.getProducts(page);
@@ -62,6 +66,8 @@ public class ProductListController {
 	    public Page <Product> nameDESC (@PageableDefault(sort="productname", direction = Direction.DESC,size = 9) Pageable page){
 	    	return productservice.getProducts(page);
 	    }	    
+
+// SORT BY PRODUCT PRICE (ASCENDING / DESCENDING) --------------------------------------------------------------------------------------------	    
 	    
 	    @GetMapping("/productlist/SortByPriceASC")
 	    public Page <Product> priceASC (@PageableDefault(sort="price", direction = Direction.ASC,size = 9) Pageable page){
@@ -72,7 +78,8 @@ public class ProductListController {
 	    public Page <Product> priceDESC (@PageableDefault(sort="price", direction = Direction.DESC,size = 9) Pageable page){
 	    	return productservice.getProducts(page);
 	    }	
-	    
+
+// SORT BY PRODUCT BRAND (ASCENDING / DESCENDING) --------------------------------------------------------------------------------------------	    
 	    
 	    @GetMapping("/productlist/SortByBrandASC")
 	    public Page <Product> brandASC (@PageableDefault(sort="brand", direction = Direction.ASC,size = 9) Pageable page){
@@ -84,8 +91,8 @@ public class ProductListController {
 	    	return productservice.getProducts(page);
 	    }	
 
+// FILTER BY PRODUCT BRAND --------------------------------------------------------------------------------------------	    
     
-
 	    @GetMapping("/productlist/filterByBrand")
 	    public ResponseEntity<?> filterProductsByBrand( @RequestParam(required = false) String brand,
 	          @RequestParam(defaultValue = "0") int page,@RequestParam (defaultValue = "9") int size) {
@@ -108,6 +115,8 @@ public class ProductListController {
 	        return new ResponseEntity<>(display, HttpStatus.OK);
 	      }	    
 
+// FILTER BY PRODUCT PRICE --------------------------------------------------------------------------------------------	    
+	    
 	    @GetMapping("/productlist/filterByPrice")
 	    public ResponseEntity<?> filterProductsByPrice( @RequestParam(required = false) Float price,
 	          @RequestParam(defaultValue = "0") int page,@RequestParam (defaultValue = "9") int size) {
@@ -128,47 +137,5 @@ public class ProductListController {
 	        display.put("products", products);
 
 	        return new ResponseEntity<>(display, HttpStatus.OK);
-	      }	    
-	    
-	    /*
-	    @GetMapping("/productlist/SortByPriceASC")
-	    public ResponseEntity<?> getProducts(String sort, @RequestParam(required = false) String brand,
-	    	  @RequestParam(required = false) Float price,
-	          @RequestParam(defaultValue = "0") int page,@RequestParam (defaultValue = "9") int size) {
-	        
-	    	Pageable pageall = PageRequest.of(page, size);
-	    	
-	        Pageable brandASC = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC,"brand"));
-	        Pageable brandDESC = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC,"brand"));
-	        
-	        Pageable priceASC = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC,"price"));
-	        Pageable priceDESC = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC,"price"));
-	        
-	        Page<Product> pagecontent;	        
-	        if (sort == "BrandASC")
-	        	pagecontent = repository.findAll(brandASC);	         
-	        else if (sort =="BrandDESC") 
-	        	pagecontent = repository.findAll(brandDESC);
-	        else if (sort == "PriceASC")
-	        	pagecontent = repository.findAll(priceASC);	         
-	        else if (sort =="PriceDESC") 
-	        	pagecontent = repository.findAll(priceDESC);
-	        else
-	        pagecontent = repository.findAll(pageall);
-
-	        List<Product> products = new ArrayList<Product>();
-	        products = pagecontent.getContent();
-
-	        Map<String, Object> display = new HashMap<>();
-	        display.put("totalPagesCreated", pagecontent.getTotalPages());
-	        display.put("currentPageIndex", pagecontent.getNumber());
-	        
-	        display.put("totalProductFound", pagecontent.getTotalElements());	        
-	        display.put("products", products);
-
-	        return new ResponseEntity<>(display, HttpStatus.OK);
-	      }
-*/	     	    
-	    
-	    
+	      }	        	    	    	    
 }

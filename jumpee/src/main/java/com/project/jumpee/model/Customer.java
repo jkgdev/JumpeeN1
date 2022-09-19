@@ -33,6 +33,9 @@ public class Customer {
 	@Column (name="password") 
 	private String password;	
 	
+	@Column (name="role") @JsonView(View.Base.class)
+	private String role;
+	
 	@Column (name="status") @JsonView(View.Base.class)
 	private String status;
 
@@ -123,5 +126,14 @@ public class Customer {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
+	
+	
 	
 }

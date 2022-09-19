@@ -17,7 +17,7 @@ public class Order {
 	@Column (name="order_id") @JsonView(View.Base.class)
 	private Integer order_id; 
 	
-	@Column (name="order_id") @JsonView(View.Base.class)
+	@Column (name="product_id") @JsonView(View.Base.class)
 	private int product_id;
 	
 	@Column (name="productname") @JsonView(View.Base.class)
@@ -31,6 +31,9 @@ public class Order {
 	
 	@Column (name="totalprice") @JsonView(View.Base.class)
 	private float totalprice;
+	
+	@Column (name="status") @JsonView(View.Base.class)
+	private String status;
 	
 	Order () {}
 
@@ -81,6 +84,14 @@ public class Order {
 
 	public void setTotalprice(float totalprice) {
 		this.totalprice = totalprice;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 	

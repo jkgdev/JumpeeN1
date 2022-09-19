@@ -17,11 +17,14 @@ public class WalletTransactions {
 	@Column (name="wallet_transaction_id") @JsonView(View.Base.class)
 	private Integer wallet_transaction_id;
 	
-	@Column (name="customer_id") @JsonView(View.Base.class)
-	private int customer_id;
+	@Column (name="customerid") @JsonView(View.Base.class)
+	private int customerid;
 	
-	@Column (name="addedamount") @JsonView(View.Base.class)
-	private float addedamount;
+	@Column (name="transaction_type") @JsonView(View.Base.class)
+	private String transaction_type;
+	
+	@Column (name="transact_amount") @JsonView(View.Base.class)
+	private float transact_amount;
 	
 	@Column (name="currentamount") @JsonView(View.Base.class)
 	private float currentamount;
@@ -41,19 +44,22 @@ public class WalletTransactions {
 		this.wallet_transaction_id = wallet_transaction_id;
 	}
 
-	public int getCustomer_id() {
-		return customer_id;
+	public int getCustomerid() {
+		return customerid;
 	}
-	public void setCustomer_id(int customer_id) {
-		this.customer_id = customer_id;
+	public void setCustomerid(int customerid) {
+		this.customerid = customerid;
 	}
 
-	public float getAddedamount() {
-		return addedamount;
+	public float getTransact_amount() {
+		return transact_amount;
 	}
-	public void setAddedamount(float addedamount) {
-		this.addedamount = addedamount;
+
+
+	public void setTransact_amount(float transact_amount) {
+		this.transact_amount = transact_amount;
 	}
+
 
 	public float getCurrentamount() {
 		return currentamount;
@@ -68,5 +74,17 @@ public class WalletTransactions {
 	public void setDate(String date) {
 		this.date = date;
 	}
-		
+
+
+	public String getTransaction_type() {
+		return transaction_type;
+	}
+
+
+	public void setTransaction_type(String transaction_type) {
+		this.transaction_type = transaction_type;
+	}
+	
+	
+	
 }
